@@ -162,6 +162,7 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
 
   <section id="paso4">
     <div class="stephead"><span class="num">4</span><h2>Envíala desde tu correo</h2></div>
+    <p class="note" id="mobile-note" hidden><b>En el celular:</b> «Abrir Gmail» abre la app de Gmail (en iPhone tiene que estar instalada). Si no pasa nada, usa «mi app de correo» o copia cada parte a mano con los botones de «¿No se abre tu correo?».</p>
     <div id="need-comuna2" class="warnbox">Primero elige tu comuna en el paso 1.</div>
     <div id="send" hidden class="stack gap-lg">
       <div class="panel">
@@ -251,6 +252,19 @@ Object.keys(C2D).sort((a,b)=>a.localeCompare(b,"es")).forEach(c=>{const o=docume
 
 const SUBJECT="Solicitud de fiscalización por la adhesión de Chile al «Escudo de las Américas» sin aprobación del Congreso Nacional";
 const CC="cartascamaras@gmail.com";
+const UA=navigator.userAgent||"";
+const IOS=/iPhone|iPad|iPod/.test(UA)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+const ANDROID=/Android/.test(UA);
+const MOBILE=IOS||ANDROID;
+function mailLinks(to,subject){
+  const T=to.join(","), e=encodeURIComponent;
+  const mailto="mailto:"+T+"?cc="+e(CC)+"&subject="+e(subject);
+  let gmail;
+  if(IOS) gmail="googlegmail:///co?to="+e(T)+"&cc="+e(CC)+"&subject="+e(subject);
+  else if(ANDROID) gmail=mailto;
+  else gmail="https://mail.google.com/mail/?view=cm&fs=1&to="+e(T)+"&cc="+e(CC)+"&su="+e(subject);
+  return {gmail,mailto,newTab:!MOBILE};
+}
 $("asunto").value=SUBJECT;
 
 function letter(){
@@ -333,7 +347,7 @@ function singular(text,r){
 const opened=new Set();
 function renderOBO(){
   const list=reps();
-  $("onebyone").innerHTML=list.map((r,i)=>`<div class="obo${opened.has(r.e)?" opened":""}" data-i="${i}"><div class="who"><span class="n">${esc(r.cargo)} ${esc(r.n)}</span><span class="meta">${esc(r.p)} · ${esc(r.e)}</span></div><div class="acts"><a class="btn" data-k="g" data-i="${i}" target="_blank" rel="noopener" href="https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(r.e)}&cc=${encodeURIComponent(CC)}&su=${encodeURIComponent($("asunto").value)}">Copiar y abrir Gmail</a><a data-k="m" data-i="${i}" href="mailto:${r.e}?cc=${encodeURIComponent(CC)}&subject=${encodeURIComponent($("asunto").value)}">o mi app de correo</a></div></div>`).join("");
+  $("onebyone").innerHTML=list.map((r,i)=>{const L=mailLinks([r.e],$("asunto").value);return `<div class="obo${opened.has(r.e)?" opened":""}" data-i="${i}"><div class="who"><span class="n">${esc(r.cargo)} ${esc(r.n)}</span><span class="meta">${esc(r.p)} · ${esc(r.e)}</span></div><div class="acts"><a class="btn" data-k="g" data-i="${i}"${L.newTab?' target="_blank" rel="noopener"':''} href="${esc(L.gmail)}">Copiar y abrir Gmail</a><a data-k="m" data-i="${i}" href="${esc(L.mailto)}">o mi app de correo</a></div></div>`}).join("");
   const n=list.filter(r=>opened.has(r.e)).length;
   $("progress").textContent=`Abiertos: ${n} de ${list.length}`+(n===list.length&&n>0?" · ¡Listo! Gracias por escribirles a todos.":"");
 }
@@ -355,8 +369,9 @@ function update(){
   $("emails").textContent=recipients().join(", ");
   if(!edited)$("carta").value=letter();
   const body=$("carta").value;
-  $("gmail").href="https://mail.google.com/mail/?view=cm&fs=1&to="+encodeURIComponent(recipients().join(","))+"&cc="+encodeURIComponent(CC)+"&su="+encodeURIComponent($("asunto").value);
-  $("mailto").href="mailto:"+recipients().join(",")+"?cc="+encodeURIComponent(CC)+"&subject="+encodeURIComponent($("asunto").value);
+  const L=mailLinks(recipients(),$("asunto").value);
+  $("gmail").href=L.gmail; $("mailto").href=L.mailto;
+  if(L.newTab)$("gmail").setAttribute("target","_blank");else $("gmail").removeAttribute("target");
   renderOBO();
   renderAll();
 }
@@ -389,6 +404,7 @@ $("onebyone").addEventListener("click",e=>{
 $("copy-cc").addEventListener("click",()=>copy(CC,"toast-cc",$("ccbox")));
 $("copy-subject").addEventListener("click",()=>copy($("asunto").value,"toast-subject",$("asunto")));
 $("copy-letter").addEventListener("click",()=>copy($("carta").value,"toast-letter",$("carta")));
+if(MOBILE)$("mobile-note").hidden=false;
 const SHARE=`El Gobierno adhirió al «Escudo de las Américas» sin pasar por el Congreso y sin transparentar qué compromete a Chile, con posibles efectos en nuestro comercio exterior.
 
 El lunes 28 de septiembre se interpela al canciller. Antes de eso, escríbeles a tus diputados y senadores para pedirles que fiscalicen.
