@@ -253,8 +253,8 @@ Object.keys(C2D).sort((a,b)=>a.localeCompare(b,"es")).forEach(c=>{const o=docume
 const SUBJECT="Solicitud de fiscalización por la adhesión de Chile al «Escudo de las Américas» sin aprobación del Congreso Nacional";
 const CC="cartascamaras@gmail.com";
 const UA=navigator.userAgent||"";
-const IOS=/iPhone|iPad|iPod/.test(UA)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
 const ANDROID=/Android/.test(UA);
+const IOS=!ANDROID&&(/iPhone|iPad|iPod/.test(UA)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1));
 const MOBILE=IOS||ANDROID;
 function mailLinks(to,subject){
   const T=to.join(","), e=encodeURIComponent;
