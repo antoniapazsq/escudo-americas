@@ -78,6 +78,21 @@ tr.mine td{background:var(--accent-soft)}
 .btn.big{font-size:16px;padding:12px 18px;align-self:flex-start}
 textarea.short{min-height:170px}
 .after{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px;max-width:70ch}
+.gap-lg{gap:20px}
+.pad-top{padding-top:12px}
+details summary{cursor:pointer;font-weight:600;color:var(--accent);font-size:14px}
+.tip{background:var(--accent-soft);border-radius:6px;padding:12px 14px;font-size:14px}
+.progress{font-weight:600;font-size:14px}
+.onebyone{display:flex;flex-direction:column;gap:0}
+.obo{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;padding:10px 0;border-top:1px solid var(--line)}
+.obo:last-child{border-bottom:1px solid var(--line)}
+.obo .who{display:flex;flex-direction:column;gap:1px;min-width:0}
+.obo .who .n{font-weight:600}
+.obo .who .meta{font-size:12px;color:var(--muted)}
+.obo .acts{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.obo .acts a{font-size:13px}
+.obo .done{font-size:13px;font-weight:600;color:var(--ok)}
+.obo.opened .n::after{content:" ✓";color:var(--ok)}
 footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:6px}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
@@ -130,38 +145,60 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
   </section>
 
   <section id="paso3">
-    <div class="stephead"><span class="num">3</span><h2>Copia y envía desde tu correo</h2></div>
+    <div class="stephead"><span class="num">3</span><h2>Revisa la carta</h2></div>
     <div class="panel">
-      <p class="note"><b>Si usas Gmail:</b> aprieta «Copiar carta y abrir Gmail». Se abre un correo con los destinatarios, la copia y el asunto ya puestos. Pega la carta en el mensaje y aprieta «Enviar».<br><b>Si usas otro correo</b> (Outlook, Hotmail, el del celular): abre un correo nuevo y aprieta «Copiar carta y abrir mi app de correo» y pega la carta en el mensaje. Si no se abre, abre un correo nuevo y pega lo que copias con cada botón: los destinatarios en «Para», el correo de copia en «CC», el asunto y la carta.</p>
       <div id="need-comuna" class="warnbox">Primero elige tu comuna en el paso 1.</div>
-      <div id="send" hidden class="stack">
-        <div class="row"><a class="btn big" id="gmail" href="#" target="_blank" rel="noopener">Copiar carta y abrir Gmail</a><a class="btn big ghost" id="mailto" href="#">Copiar carta y abrir mi app de correo</a></div>
-        <div class="warnbox" id="paste-hint" hidden>La carta ya está copiada. En el correo que se abrió, toca el espacio del mensaje y pega: Cmd+V en Mac, Ctrl+V en Windows, o mantén presionado y elige «Pegar» en el celular. Los destinatarios, la copia y el asunto ya vienen puestos.</div>
-        <div class="stack">
-          <span class="lbl">Para (destinatarios)</span>
-          <div class="emails-box" id="emails"></div>
-          <div class="row"><button type="button" class="ghost" id="copy-emails">Copiar destinatarios</button><span class="toast" id="toast-emails" aria-live="polite"></span></div>
-        </div>
-        <div class="stack">
-          <span class="lbl">CC (con copia)</span>
-          <div class="emails-box" id="ccbox">cartascamaras@gmail.com</div>
-          <p class="note">Deja este correo en copia: así la campaña recibe un registro de cada carta enviada y puede contar cuántas llegaron. Es opcional.</p>
-          <div class="row"><button type="button" class="ghost" id="copy-cc">Copiar CC</button><span class="toast" id="toast-cc" aria-live="polite"></span></div>
-        </div>
+      <div id="letterbox" hidden class="stack">
+        <p class="note">Ya incluye tu nombre y tu comuna. Puedes editarla: tus cambios se usan en las dos formas de envío del paso 4.</p>
         <label for="asunto">Asunto
           <input id="asunto" type="text">
         </label>
-        <div class="row"><button type="button" class="ghost" id="copy-subject">Copiar asunto</button><span class="toast" id="toast-subject" aria-live="polite"></span></div>
-        <label for="carta">Carta (puedes editarla)
+        <label for="carta">Carta
           <textarea id="carta" spellcheck="true"></textarea>
         </label>
-        <div class="row"><button type="button" class="ghost" id="copy-letter">Copiar carta</button><span class="toast" id="toast-letter" aria-live="polite"></span></div>
       </div>
     </div>
   </section>
 
   <section id="paso4">
-    <div class="stephead"><span class="num">4</span><h2>Después de enviar</h2></div>
+    <div class="stephead"><span class="num">4</span><h2>Envíala desde tu correo</h2></div>
+    <div id="need-comuna2" class="warnbox">Primero elige tu comuna en el paso 1.</div>
+    <div id="send" hidden class="stack gap-lg">
+      <div class="panel">
+        <h3>Opción A · Un solo correo a todos</h3>
+        <p class="note">Un correo con todos tus parlamentarios en «Para». Todos ven a quiénes más les escribiste. Es la forma más rápida: un solo envío.</p>
+        <div class="row"><a class="btn big" id="gmail" href="#" target="_blank" rel="noopener">Copiar carta y abrir Gmail</a><a class="btn big ghost" id="mailto" href="#">Copiar carta y abrir mi app de correo</a></div>
+        <div class="warnbox paste-hint" hidden>La carta ya está copiada. En el correo que se abrió, toca el espacio del mensaje y pega: Cmd+V en Mac, Ctrl+V en Windows, o mantén presionado y elige «Pegar» en el celular. Los destinatarios, la copia y el asunto ya vienen puestos. Revisa y aprieta «Enviar».</div>
+        <details>
+          <summary>¿No se abre tu correo? Copia cada parte a mano</summary>
+          <div class="stack pad-top">
+            <span class="lbl">Para</span>
+            <div class="emails-box" id="emails"></div>
+            <div class="row"><button type="button" class="ghost" id="copy-emails">Copiar destinatarios</button><span class="toast" id="toast-emails" aria-live="polite"></span></div>
+            <span class="lbl">CC (con copia)</span>
+            <div class="emails-box" id="ccbox">cartascamaras@gmail.com</div>
+            <div class="row"><button type="button" class="ghost" id="copy-cc">Copiar CC</button><span class="toast" id="toast-cc" aria-live="polite"></span></div>
+            <div class="row"><button type="button" class="ghost" id="copy-subject">Copiar asunto</button><span class="toast" id="toast-subject" aria-live="polite"></span></div>
+            <div class="row"><button type="button" class="ghost" id="copy-letter">Copiar carta</button><span class="toast" id="toast-letter" aria-live="polite"></span></div>
+          </div>
+        </details>
+      </div>
+
+      <div class="panel">
+        <h3>Opción B · Uno por uno</h3>
+        <div class="tip"><b>Esta es la forma más efectiva.</b> Son entre 10 y 13 clics, uno por parlamentario, pero cada uno recibe un correo solo para él o ella, con su nombre en el saludo. Los correos individuales se leen y se responden más que los masivos, y pesan más cuando las oficinas cuentan cuántas cartas llegaron.</div>
+        <p class="note">Por cada parlamentario: aprieta su botón, pega la carta en el mensaje y envía. Después vuelve aquí y sigue con el siguiente.</p>
+        <div class="warnbox paste-hint" hidden>La carta ya está copiada con el saludo para esa persona. Pégala en el mensaje (Cmd+V, Ctrl+V o mantener presionado → «Pegar»), revisa y aprieta «Enviar».</div>
+        <p class="progress" id="progress" aria-live="polite"></p>
+        <div class="onebyone" id="onebyone"></div>
+      </div>
+
+      <p class="note">En las dos opciones va con copia a <b>cartascamaras@gmail.com</b>: así la campaña recibe un registro de cada carta enviada y puede contar cuántas llegaron. Puedes quitarla si prefieres.</p>
+    </div>
+  </section>
+
+  <section id="paso5">
+    <div class="stephead"><span class="num">5</span><h2>Después de enviar</h2></div>
     <ul class="after">
       <li><b>Comparte esta página</b> con tus contactos. Mientras más cartas lleguen, más peso tiene. Abajo hay un texto listo para WhatsApp o redes.</li>
       <li><b>Pide el texto del acuerdo por Ley de Transparencia.</b> En <a href="https://www.portaltransparencia.cl" target="_blank" rel="noopener">portaltransparencia.cl</a>, haz una solicitud al Ministerio de Relaciones Exteriores. Pide el documento de adhesión, los compromisos asumidos y los informes jurídicos que respaldan no enviarlo al Congreso. Tienen 20 días hábiles para responder. Si no responden, puedes reclamar ante el Consejo para la Transparencia.</li>
@@ -202,6 +239,8 @@ const DIPS=[["Marcos Barraza",8,"PC","marcos.barraza@congreso.cl"],["Enrique Bas
 ["Ignacio Achurra",14,"FA","ignacio.achurra@congreso.cl"],["Jaime Coloma",14,"UDI","jaime.coloma@congreso.cl"],["Juan Irarrázaval",14,"PREP","juan.irarrazaval@congreso.cl"],["Raúl Leiva",14,"PS","raul.leiva@congreso.cl"],["Marisela Santibáñez",14,"IND","marisela.santibanez@congreso.cl"],["Diego Vergara",14,"PREP","diego.vergara@congreso.cl"]];
 const SENS=[["Fabiola Campillai","IND","fcampillai@senado.cl"],["Luciano Cruz-Coke","Evópoli","lcruzcoke@senado.cl"],["Rojo Edwards","IND","redwards@senado.cl"],["Manuel José Ossandón","RN","mjossandon@senado.cl"],["Claudia Pascual","PC","cpascual@senado.cl"]];
 const COMUNAS={8:["Cerrillos","Colina","Estación Central","Lampa","Maipú","Pudahuel","Quilicura","Tiltil"],9:["Cerro Navia","Conchalí","Huechuraba","Independencia","Lo Prado","Quinta Normal","Recoleta","Renca"],10:["La Granja","Macul","Ñuñoa","Providencia","San Joaquín","Santiago"],11:["La Reina","Las Condes","Lo Barnechea","Peñalolén","Vitacura"],12:["La Florida","La Pintana","Pirque","Puente Alto","San José de Maipo"],13:["El Bosque","La Cisterna","Lo Espejo","Pedro Aguirre Cerda","San Miguel","San Ramón"],14:["Alhué","Buin","Calera de Tango","Curacaví","El Monte","Isla de Maipo","María Pinto","Melipilla","Padre Hurtado","Paine","Peñaflor","San Bernardo","San Pedro","Talagante"]};
+const MUJERES=new Set(["Tatiana Urrutia","Tamara Ramírez","Javiera Rodríguez","Lorena Fries","Irací Hassler","Emilia Schneider","Catalina Del Real","Constanza Hube","Claudia Mora","Constanza Schonhaut","Ana María Gazmuri","Pamela Jiles","Ximena Ossandón","Zandra Parisi","Macarena Santelices","Daniela Serrano","Valentina Becerra","Lorena Pizarro","Gael Yeomans","Marisela Santibáñez","Fabiola Campillai","Claudia Pascual"]);
+const cleanName=n=>n.replace(/ \(no es el Presidente\)$/,"");
 const C2D={};Object.entries(COMUNAS).forEach(([d,cs])=>cs.forEach(c=>C2D[c]=+d));
 const $=id=>document.getElementById(id);
 const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -278,6 +317,26 @@ ${comuna}, Región Metropolitana
 ${correo}`;
 }
 function recipients(){const d=C2D[sel.value];if(!d)return [];return DIPS.filter(x=>x[1]===d).map(x=>x[3]).concat(SENS.map(s=>s[2]))}
+function reps(){const d=C2D[sel.value];if(!d)return [];const m=n=>MUJERES.has(cleanName(n));
+  return DIPS.filter(x=>x[1]===d).map(x=>({n:cleanName(x[0]),cargo:m(x[0])?"Diputada":"Diputado",p:x[2],e:x[3]})).concat(SENS.map(s=>({n:s[0],cargo:m(s[0])?"Senadora":"Senador",p:s[1],e:s[2]})))}
+function singular(text,r){
+  const pairs=[
+    [/^Honorables diputadas, diputados, senadoras y senadores:/,`Honorable ${r.cargo} ${r.n}:`],
+    ["Me dirijo a ustedes, en su calidad de representantes de la ciudadanía y titulares de la función fiscalizadora, para solicitarles que actúen","Me dirijo a usted, en su calidad de representante de la ciudadanía y titular de la función fiscalizadora, para solicitarle que actúe"],
+    ["Les exigimos que, como representantes, cumplan su rol","Le exigimos que, como representante, cumpla su rol"],
+    ["de acuerdo con su función, les corresponde ejecutar","de acuerdo con su función, le corresponde ejecutar"],
+    ["solicito respetuosamente a ustedes:","solicito respetuosamente a usted:"],
+    ["las gestiones que realicen.","las gestiones que realice."]];
+  for(const [a,b] of pairs)text=text.replace(a,b);
+  return text;
+}
+const opened=new Set();
+function renderOBO(){
+  const list=reps();
+  $("onebyone").innerHTML=list.map((r,i)=>`<div class="obo${opened.has(r.e)?" opened":""}" data-i="${i}"><div class="who"><span class="n">${esc(r.cargo)} ${esc(r.n)}</span><span class="meta">${esc(r.p)} · ${esc(r.e)}</span></div><div class="acts"><a class="btn" data-k="g" data-i="${i}" target="_blank" rel="noopener" href="https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(r.e)}&cc=${encodeURIComponent(CC)}&su=${encodeURIComponent($("asunto").value)}">Copiar y abrir Gmail</a><a data-k="m" data-i="${i}" href="mailto:${r.e}?cc=${encodeURIComponent(CC)}&subject=${encodeURIComponent($("asunto").value)}">o mi app de correo</a></div></div>`).join("");
+  const n=list.filter(r=>opened.has(r.e)).length;
+  $("progress").textContent=`Abiertos: ${n} de ${list.length}`+(n===list.length&&n>0?" · ¡Listo! Gracias por escribirles a todos.":"");
+}
 function card(n,meta,e){return `<div class="person"><span class="n">${esc(n)}</span><span class="meta">${esc(meta)}</span><span class="e">${esc(e)}</span></div>`}
 function renderAll(){
   const d=C2D[sel.value];let h="";
@@ -288,7 +347,7 @@ function renderAll(){
 let edited=false;
 function update(){
   const d=C2D[sel.value];
-  $("reps").hidden=!d;$("send").hidden=!d;$("need-comuna").hidden=!!d;$("pick-hint").hidden=!!d;
+  $("reps").hidden=!d;$("send").hidden=!d;$("letterbox").hidden=!d;$("need-comuna").hidden=!!d;$("need-comuna2").hidden=!!d;$("pick-hint").hidden=!!d;
   if(!d){renderAll();return}
   $("dist-tag").textContent=`Distrito ${d} · ${COMUNAS[d].join(", ")}`;
   $("dips").innerHTML=DIPS.filter(x=>x[1]===d).map(x=>card(x[0],"Diputado/a · "+x[2],x[3])).join("");
@@ -298,6 +357,7 @@ function update(){
   const body=$("carta").value;
   $("gmail").href="https://mail.google.com/mail/?view=cm&fs=1&to="+encodeURIComponent(recipients().join(","))+"&cc="+encodeURIComponent(CC)+"&su="+encodeURIComponent($("asunto").value);
   $("mailto").href="mailto:"+recipients().join(",")+"?cc="+encodeURIComponent(CC)+"&subject="+encodeURIComponent($("asunto").value);
+  renderOBO();
   renderAll();
 }
 ["comuna","nombre","correo","trato"].forEach(k=>$(k).addEventListener("input",update));
@@ -315,8 +375,17 @@ $("copy-emails").addEventListener("click",()=>copy(recipients().join(", "),"toas
 ["gmail","mailto"].forEach(id=>$(id).addEventListener("click",()=>{
   const t=$("carta").value;
   try{navigator.clipboard.writeText(t).catch(()=>{})}catch(e){}
-  $("paste-hint").hidden=false;
+  $("gmail").closest(".panel").querySelector(".paste-hint").hidden=false;
 }));
+$("onebyone").addEventListener("click",e=>{
+  const a=e.target.closest("a[data-i]");if(!a)return;
+  const r=reps()[+a.dataset.i];
+  const t=singular($("carta").value,r);
+  try{navigator.clipboard.writeText(t).catch(()=>{})}catch(err){}
+  $("onebyone").closest(".panel").querySelector(".paste-hint").hidden=false;
+  opened.add(r.e);
+  setTimeout(renderOBO,50);
+});
 $("copy-cc").addEventListener("click",()=>copy(CC,"toast-cc",$("ccbox")));
 $("copy-subject").addEventListener("click",()=>copy($("asunto").value,"toast-subject",$("asunto")));
 $("copy-letter").addEventListener("click",()=>copy($("carta").value,"toast-letter",$("carta")));
