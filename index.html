@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Elige tu comuna y envía una carta formal a tus diputados y senadores de la RM pidiendo fiscalizar la adhesión de Chile al Escudo de las Américas.">
+<meta property="og:title" content="Escudo de las Américas: pide a tus parlamentarios que fiscalicen">
+<meta property="og:description" content="En 3 minutos: elige tu comuna y envía una carta formal a tus diputados y senadores. Antes del 28 de septiembre.">
+<title>Carta por el Escudo de las Américas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,650&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+:root{
+  --ground:#f3f5f8; --paper:#ffffff; --ink:#18212c; --muted:#56616f; --line:#d8dee6;
+  --accent:#1f4e8c; --accent-ink:#ffffff; --accent-soft:#e3ebf6; --warn:#8a5a00; --warn-soft:#fbf1dc; --ok:#1d6b43;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#11161d; --paper:#18202a; --ink:#e6ebf1; --muted:#9aa6b4; --line:#2b3643;
+    --accent:#7fa8e6; --accent-ink:#0d1520; --accent-soft:#1d2b3e; --warn:#e4b563; --warn-soft:#2e2615; --ok:#6fcf9b;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#11161d; --paper:#18202a; --ink:#e6ebf1; --muted:#9aa6b4; --line:#2b3643;
+  --accent:#7fa8e6; --accent-ink:#0d1520; --accent-soft:#1d2b3e; --warn:#e4b563; --warn-soft:#2e2615; --ok:#6fcf9b;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:15px/1.6 var(--sans);padding:0 16px}
+.wrap{max-width:860px;margin:0 auto;padding-block:40px 64px;display:flex;flex-direction:column;gap:36px}
+h1,h2,h3{font-family:var(--serif);text-wrap:balance;margin:0;line-height:1.2}
+h1{font-size:clamp(28px,5vw,40px);font-weight:650}
+h2{font-size:24px;font-weight:650}
+h3{font-size:17px;font-weight:650}
+p{margin:0}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+header{display:flex;flex-direction:column;gap:12px}
+header p{max-width:62ch;color:var(--muted);font-size:16px}
+.deadline{display:inline-flex;gap:8px;align-items:baseline;background:var(--warn-soft);color:var(--warn);padding:6px 12px;border-radius:6px;font-weight:600;font-size:14px;align-self:flex-start}
+section{display:flex;flex-direction:column;gap:16px}
+a{color:var(--accent)}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+label{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:600;color:var(--muted)}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--ground);border:1px solid var(--line);border-radius:6px;padding:9px 10px;width:100%}
+textarea{font-family:var(--sans);min-height:520px;line-height:1.55;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.district-tag{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px}
+.person{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--ground)}
+.person .n{font-weight:600}
+.person .meta{font-size:12px;color:var(--muted)}
+.person .e{font-family:var(--mono);font-size:12.5px;word-break:break-all;user-select:all}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button,.btn{font:inherit;font-weight:600;font-size:14px;border-radius:6px;padding:9px 14px;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);text-decoration:none;display:inline-flex;align-items:center}
+button.ghost,.btn.ghost{background:transparent;color:var(--accent)}
+.toast{font-size:13px;color:var(--ok);font-weight:600;min-height:1em}
+.emails-box{font-family:var(--mono);font-size:12.5px;background:var(--ground);border:1px dashed var(--line);border-radius:6px;padding:10px;word-break:break-all;user-select:all}
+.note{font-size:13px;color:var(--muted);max-width:70ch}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.mono{font-family:var(--mono);font-size:12.5px}
+tr.grp td{background:var(--accent-soft);font-weight:600;font-size:13px}
+tr.mine td{background:var(--accent-soft)}
+.stephead{display:flex;align-items:center;gap:12px}
+.num{font-family:var(--serif);font-weight:650;font-size:20px;width:36px;height:36px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:inline-flex;align-items:center;justify-content:center;flex:none}
+.stack{display:flex;flex-direction:column;gap:12px}
+.lbl{font-size:13px;font-weight:600;color:var(--muted)}
+.warnbox{background:var(--warn-soft);color:var(--warn);padding:10px 12px;border-radius:6px;font-weight:600;font-size:14px}
+.btn.big{font-size:16px;padding:12px 18px;align-self:flex-start}
+textarea.short{min-height:170px}
+.after{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px;max-width:70ch}
+footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:6px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Región Metropolitana · Carta ciudadana</span>
+    <h1>Escudo de las Américas: pide a tus parlamentarios que fiscalicen</h1>
+    <p>El Gobierno adhirió al «Escudo de las Américas» sin pasar por el Congreso y sin publicar qué compromete. En 3 minutos, en esta misma página, puedes enviar una carta formal a tus diputados y senadores pidiéndoles que fiscalicen.</p>
+    <span class="deadline">Interpelación al canciller: lunes 28 de septiembre. Envía antes.</span>
+  </header>
+
+  <section id="paso1">
+    <div class="stephead"><span class="num">1</span><h2>Elige tu comuna</h2></div>
+    <div class="panel">
+      <label for="comuna">¿En qué comuna vives?
+        <select id="comuna"></select>
+      </label>
+      <p class="note" id="pick-hint">Al elegirla, aquí abajo aparecen tus diputados y senadores con sus correos.</p>
+      <div id="reps" hidden>
+        <div class="stack">
+          <div class="row"><h3>Tus diputados</h3><span class="district-tag" id="dist-tag"></span></div>
+          <div class="people" id="dips"></div>
+          <h3>Tus senadores (toda la Región Metropolitana)</h3>
+          <div class="people" id="sens"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="paso2">
+    <div class="stephead"><span class="num">2</span><h2>Escribe tu nombre y correo</h2></div>
+    <div class="panel">
+      <p class="note">Se agregan solos a la carta del paso 3. Tu correo sirve para que te respondan. La página no guarda tus datos: solo van en la carta que tú envías desde tu correo.</p>
+      <div class="fields">
+        <label for="nombre">Nombre completo
+          <input id="nombre" type="text" autocomplete="name" placeholder="Nombre Apellido">
+        </label>
+        <label for="correo">Tu correo
+          <input id="correo" type="email" autocomplete="email" placeholder="tu@correo.cl">
+        </label>
+        <label for="trato">Me presento como
+          <select id="trato"><option value="vecina">vecina</option><option value="vecino">vecino</option><option value="residente">residente</option></select>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <section id="paso3">
+    <div class="stephead"><span class="num">3</span><h2>Copia y envía desde tu correo</h2></div>
+    <div class="panel">
+      <p class="note"><b>Si usas Gmail:</b> aprieta «Abrir en Gmail». Se abre un correo ya listo con los destinatarios, el asunto y la carta. Revísalo y aprieta «Enviar».<br><b>Si usas otro correo</b> (Outlook, Hotmail, el del celular): abre un correo nuevo y aprieta «Abrir en mi app de correo». Si no funciona, abre un correo nuevo y pega lo que copias con cada botón: los destinatarios en «Para», el correo de copia en «CC», el asunto y la carta.</p>
+      <div id="need-comuna" class="warnbox">Primero elige tu comuna en el paso 1.</div>
+      <div id="send" hidden class="stack">
+        <div class="row"><a class="btn big" id="gmail" href="#" target="_blank" rel="noopener">Abrir en Gmail, ya listo</a><a class="btn big ghost" id="mailto" href="#">Abrir en mi app de correo</a></div>
+        <p class="note">Si la carta aparece cortada en tu app de correo, borra el texto y pega el que copias con el botón «Copiar carta».</p>
+        <div class="stack">
+          <span class="lbl">Para (destinatarios)</span>
+          <div class="emails-box" id="emails"></div>
+          <div class="row"><button type="button" class="ghost" id="copy-emails">Copiar destinatarios</button><span class="toast" id="toast-emails" aria-live="polite"></span></div>
+        </div>
+        <div class="stack">
+          <span class="lbl">CC (con copia)</span>
+          <div class="emails-box" id="ccbox">cartascamaras@gmail.com</div>
+          <p class="note">Deja este correo en copia: así la campaña recibe un registro de cada carta enviada y puede contar cuántas llegaron. Es opcional.</p>
+          <div class="row"><button type="button" class="ghost" id="copy-cc">Copiar CC</button><span class="toast" id="toast-cc" aria-live="polite"></span></div>
+        </div>
+        <label for="asunto">Asunto
+          <input id="asunto" type="text">
+        </label>
+        <div class="row"><button type="button" class="ghost" id="copy-subject">Copiar asunto</button><span class="toast" id="toast-subject" aria-live="polite"></span></div>
+        <label for="carta">Carta (puedes editarla)
+          <textarea id="carta" spellcheck="true"></textarea>
+        </label>
+        <div class="row"><button type="button" class="ghost" id="copy-letter">Copiar carta</button><span class="toast" id="toast-letter" aria-live="polite"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="paso4">
+    <div class="stephead"><span class="num">4</span><h2>Después de enviar</h2></div>
+    <ul class="after">
+      <li><b>Comparte esta página</b> con tus contactos. Mientras más cartas lleguen, más peso tiene. Abajo hay un texto listo para WhatsApp o redes.</li>
+      <li><b>Pide el texto del acuerdo por Ley de Transparencia.</b> En <a href="https://www.portaltransparencia.cl" target="_blank" rel="noopener">portaltransparencia.cl</a>, haz una solicitud al Ministerio de Relaciones Exteriores. Pide el documento de adhesión, los compromisos asumidos y los informes jurídicos que respaldan no enviarlo al Congreso. Tienen 20 días hábiles para responder. Si no responden, puedes reclamar ante el Consejo para la Transparencia.</li>
+      <li><b>Guarda las respuestas.</b> Si en dos semanas no hay acuse de recibo, vuelve a enviar la carta.</li>
+    </ul>
+  </section>
+
+  <section id="compartir">
+    <h2>Texto para compartir</h2>
+    <div class="panel">
+      <textarea id="share" class="short" readonly></textarea>
+      <div class="row"><button type="button" id="copy-share">Copiar texto para compartir</button><span class="toast" id="toast-share" aria-live="polite"></span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Todos los parlamentarios de la RM</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Nombre</th><th>Partido</th><th>Correo</th></tr></thead>
+        <tbody id="all"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <p>Fuentes: listados oficiales de <a href="https://www.camara.cl/diputados/diputados.aspx" target="_blank" rel="noopener">camara.cl</a> y <a href="https://www.senado.cl/senadoras-y-senadores/listado-de-senadoras-y-senadores" target="_blank" rel="noopener">senado.cl</a>, revisados el 24 de septiembre de 2026 (periodo 2026–2030).</p>
+  </footer>
+</div>
+
+<script>
+const DIPS=[["Marcos Barraza",8,"PC","marcos.barraza@congreso.cl"],["Enrique Bassaletti",8,"IND","enrique.bassaletti@congreso.cl"],["Cristian Contreras",8,"PDG","cristian.contreras@congreso.cl"],["Gustavo Gatica",8,"IND","gustavo.gatica@congreso.cl"],["Pier Karlezi",8,"PNL","pier.karlezi@congreso.cl"],["Mario Olavarría",8,"UDI","mario.olavarria@congreso.cl"],["Agustín Romero",8,"PREP","agustin.romero@congreso.cl"],["Tatiana Urrutia",8,"FA","tatiana.urrutia@congreso.cl"],
+["Boris Barrera",9,"PC","boris.barrera@congreso.cl"],["Carlos Cuadrado",9,"PPD","carlos.cuadrado@congreso.cl"],["José Carlos Meza",9,"PREP","jose.meza@congreso.cl"],["Guillermo Ramírez",9,"UDI","guillermo.ramirez@congreso.cl"],["Tamara Ramírez",9,"PDG","tamara.ramirez@congreso.cl"],["Javiera Rodríguez",9,"PREP","javiera.rodriguez@congreso.cl"],["César Valenzuela",9,"PS","cesar.valenzuela@congreso.cl"],
+["Jorge Alessandri",10,"UDI","jorge.alessandri@congreso.cl"],["Lorena Fries",10,"FA","lorena.fries@congreso.cl"],["Irací Hassler",10,"PC","iraci.hassler@congreso.cl"],["José Antonio Kast Adriasola (no es el Presidente)",10,"PREP","jose.kast@congreso.cl"],["Hans Marowski",10,"PNL","hans.marowski@congreso.cl"],["Francisco Orrego",10,"RN","francisco.orrego@congreso.cl"],["Emilia Schneider",10,"FA","emilia.schneider@congreso.cl"],["Gonzalo Winter",10,"FA","gonzalo.winter@congreso.cl"],
+["Cristián Araya",11,"PREP","cristian.araya@congreso.cl"],["Catalina Del Real",11,"PREP","catalina.delreal@congreso.cl"],["Constanza Hube",11,"UDI","constanza.hube@congreso.cl"],["Claudia Mora",11,"RN","claudia.mora@congreso.cl"],["Diego Schalper",11,"RN","diego.schalper@congreso.cl"],["Constanza Schonhaut",11,"FA","constanza.schonhaut@congreso.cl"],
+["Álvaro Carter",12,"PREP","alvaro.carter@congreso.cl"],["Ana María Gazmuri",12,"PAH","anamaria.gazmuri@congreso.cl"],["Pamela Jiles",12,"PDG","pamela.jiles@congreso.cl"],["Ximena Ossandón",12,"RN","ximena.ossandon@congreso.cl"],["Zandra Parisi",12,"PDG","zandra.parisi@congreso.cl"],["Macarena Santelices",12,"PREP","macarena.santelices@congreso.cl"],["Daniela Serrano",12,"PC","daniela.serrano@congreso.cl"],
+["Valentina Becerra",13,"PREP","valentina.becerra@congreso.cl"],["Eduardo Durán",13,"RN","eduardo.duran@congreso.cl"],["Lorena Pizarro",13,"PC","lorena.pizarro@congreso.cl"],["Felipe Ross",13,"PREP","felipe.ross@congreso.cl"],["Gael Yeomans",13,"FA","gael.yeomans@congreso.cl"],
+["Ignacio Achurra",14,"FA","ignacio.achurra@congreso.cl"],["Jaime Coloma",14,"UDI","jaime.coloma@congreso.cl"],["Juan Irarrázaval",14,"PREP","juan.irarrazaval@congreso.cl"],["Raúl Leiva",14,"PS","raul.leiva@congreso.cl"],["Marisela Santibáñez",14,"IND","marisela.santibanez@congreso.cl"],["Diego Vergara",14,"PREP","diego.vergara@congreso.cl"]];
+const SENS=[["Fabiola Campillai","IND","fcampillai@senado.cl"],["Luciano Cruz-Coke","Evópoli","lcruzcoke@senado.cl"],["Rojo Edwards","IND","redwards@senado.cl"],["Manuel José Ossandón","RN","mjossandon@senado.cl"],["Claudia Pascual","PC","cpascual@senado.cl"]];
+const COMUNAS={8:["Cerrillos","Colina","Estación Central","Lampa","Maipú","Pudahuel","Quilicura","Tiltil"],9:["Cerro Navia","Conchalí","Huechuraba","Independencia","Lo Prado","Quinta Normal","Recoleta","Renca"],10:["La Granja","Macul","Ñuñoa","Providencia","San Joaquín","Santiago"],11:["La Reina","Las Condes","Lo Barnechea","Peñalolén","Vitacura"],12:["La Florida","La Pintana","Pirque","Puente Alto","San José de Maipo"],13:["El Bosque","La Cisterna","Lo Espejo","Pedro Aguirre Cerda","San Miguel","San Ramón"],14:["Alhué","Buin","Calera de Tango","Curacaví","El Monte","Isla de Maipo","María Pinto","Melipilla","Padre Hurtado","Paine","Peñaflor","San Bernardo","San Pedro","Talagante"]};
+const C2D={};Object.entries(COMUNAS).forEach(([d,cs])=>cs.forEach(c=>C2D[c]=+d));
+const $=id=>document.getElementById(id);
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+const sel=$("comuna");
+{const o=document.createElement("option");o.value="";o.textContent="Selecciona tu comuna…";sel.appendChild(o)}
+Object.keys(C2D).sort((a,b)=>a.localeCompare(b,"es")).forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;sel.appendChild(o)});
+
+const SUBJECT="Solicitud de fiscalización por la adhesión de Chile al «Escudo de las Américas» sin aprobación del Congreso Nacional";
+const CC="cartascamaras@gmail.com";
+$("asunto").value=SUBJECT;
+
+function letter(){
+  const comuna=sel.value, d=C2D[comuna];
+  const nombre=$("nombre").value.trim()||"[Nombre completo]";
+  const correo=$("correo").value.trim()||"[correo electrónico]";
+  const trato=$("trato").value;
+  return `Honorables diputadas, diputados, senadoras y senadores:
+
+Mi nombre es ${nombre}, ${trato} de la comuna de ${comuna}, Distrito N° ${d}, Circunscripción Senatorial 7, Región Metropolitana. Me dirijo a ustedes, en su calidad de representantes de la ciudadanía y titulares de la función fiscalizadora, para solicitarles que actúen frente a la adhesión de Chile al denominado «Escudo de las Américas», anunciada por el Presidente de la República en septiembre de 2026 sin haber sido sometida al Congreso Nacional y sin que se haya hecho público su contenido.
+
+I. NORMAS QUE ESTA DECISIÓN PODRÍA VULNERAR
+
+1. Artículo 54 N° 1 de la Constitución Política. Corresponde al Congreso aprobar o desechar los tratados internacionales antes de su ratificación. Aunque el Gobierno califica la iniciativa como un «marco voluntario de coordinación», la naturaleza de un compromiso internacional depende de su contenido y no del nombre que se le dé. Si implica obligaciones de intercambio de información, cooperación policial o militar, o uso de recursos públicos, debió ser sometido a aprobación parlamentaria.
+
+2. Artículo 54 N° 1, inciso cuarto, en relación con el artículo 63 de la Constitución. Incluso los acuerdos que el Ejecutivo celebra por sí solo requieren aprobación del Congreso cuando versan sobre materias propias de ley. Las atribuciones de las policías y de las Fuerzas Armadas, el tratamiento de datos personales y el compromiso de recursos fiscales son materias de ley.
+
+3. Artículo 32 N° 15 de la Constitución. El Presidente conduce las relaciones internacionales, pero la misma norma le exige someter los tratados a la aprobación del Congreso conforme al artículo 54 N° 1. Su atribución no es absoluta: está sujeta al control del Poder Legislativo.
+
+4. Artículos 6 y 7 de la Constitución (principio de juridicidad). Los órganos del Estado deben actuar dentro de su competencia y en la forma que prescribe la ley. Ninguna autoridad puede atribuirse otras facultades que las expresamente conferidas, y todo acto en contravención es nulo.
+
+5. Artículo 8 de la Constitución (principio de publicidad). Los actos y resoluciones de los órganos del Estado, así como sus fundamentos, son públicos. Solo una ley de quórum calificado puede establecer su reserva o secreto, y ninguna ha sido invocada para mantener en reserva el contenido de esta adhesión.
+
+6. Ley N° 20.285 sobre Acceso a la Información Pública, y artículo 13 de la Ley N° 18.575 de Bases Generales de la Administración del Estado, que consagran la transparencia de la función pública y el derecho de toda persona a conocer los actos de la Administración y sus fundamentos.
+
+7. Artículo 19 N° 4 de la Constitución y Ley N° 19.628 sobre protección de la vida privada. Si la adhesión contempla intercambio de datos o análisis de información con gobiernos extranjeros, se compromete el derecho a la protección de los datos personales de chilenas y chilenos. Esto exige una base legal y garantías que hoy se desconocen, más aún ante la próxima entrada en vigencia de la Ley N° 21.719.
+
+8. Ley N° 19.067 sobre entrada y salida de tropas. Si la coordinación llegara a involucrar la presencia de efectivos extranjeros en territorio nacional o la participación de tropas chilenas en el exterior, se requiere la autorización que dicha ley establece.
+
+II. AFECTACIÓN A LA SOBERANÍA NACIONAL
+
+El artículo 5 de la Constitución establece que la soberanía reside esencialmente en la Nación y se ejerce por el pueblo y por las autoridades que la Constitución establece. Comprometer a Chile en una alianza de seguridad liderada por una potencia extranjera, sin deliberación democrática, afecta la autonomía del Estado para definir su propia política de seguridad, inteligencia y relaciones exteriores. Existe además el riesgo de alinear al país en conflictos geopolíticos ajenos, con consecuencias sobre nuestras relaciones con otros socios, entre ellos nuestro principal socio comercial, la República Popular China, y sobre las exportaciones y el empleo que dependen de ese comercio. Según ha informado la prensa, la iniciativa incluiría posiciones contrarias a la Corte Penal Internacional, cuyo Estatuto Chile ratificó y se obligó a cumplir.
+
+III. AFECTACIÓN AL ROL DE LA PRESIDENCIA Y A LA SEPARACIÓN DE PODERES
+
+La Constitución otorga al Presidente la conducción de las relaciones exteriores, pero no lo autoriza a obligar internacionalmente al Estado por sí solo en materias que la Constitución reserva al Congreso. Presentar un compromiso de esta naturaleza como una simple «coordinación voluntaria» para eludir la aprobación parlamentaria excede el rol presidencial y sienta un precedente grave: cualquier gobierno futuro podría comprometer al país en alianzas internacionales sin control alguno.
+
+IV. AFECTACIÓN A LA DEMOCRACIA
+
+La democracia no se agota en las elecciones. Exige que las decisiones que comprometen al país se adopten con transparencia, deliberación pública y control de los órganos representativos. Una decisión que involucra la seguridad nacional, el uso de información de la ciudadanía y la política exterior, tomada sin debate en el Congreso y sin conocimiento público de su contenido, debilita el sistema de pesos y contrapesos y la confianza de la ciudadanía en sus instituciones.
+
+V. SOLICITUDES
+
+Por lo expuesto, solicito respetuosamente a ustedes:
+
+a) Oficiar al Ministerio de Relaciones Exteriores y al Ministerio de Seguridad Pública para que remitan el texto íntegro del documento de adhesión, los compromisos asumidos y los informes jurídicos que fundamentan la decisión de no someterlo al Congreso.
+
+b) Incluir estas materias en la interpelación al Canciller programada para el 28 de septiembre de 2026.
+
+c) Requerir a la Subsecretaría de Relaciones Económicas Internacionales una evaluación del impacto de esta adhesión en el comercio exterior de Chile.
+
+d) Exigir que la adhesión sea sometida a la aprobación del Congreso Nacional conforme al artículo 54 N° 1 de la Constitución y, si ello no ocurre, ejercer las acciones constitucionales que correspondan, incluido el requerimiento ante el Tribunal Constitucional.
+
+Agradeceré acusar recibo de esta comunicación e informarme de las gestiones que realicen.
+
+Atentamente,
+
+${nombre}
+${comuna}, Región Metropolitana
+${correo}`;
+}
+function recipients(){const d=C2D[sel.value];if(!d)return [];return DIPS.filter(x=>x[1]===d).map(x=>x[3]).concat(SENS.map(s=>s[2]))}
+function card(n,meta,e){return `<div class="person"><span class="n">${esc(n)}</span><span class="meta">${esc(meta)}</span><span class="e">${esc(e)}</span></div>`}
+function renderAll(){
+  const d=C2D[sel.value];let h="";
+  for(const dd of Object.keys(COMUNAS)){h+=`<tr class="grp"><td colspan="3">Distrito ${dd}: ${COMUNAS[dd].join(", ")}</td></tr>`;DIPS.filter(x=>x[1]==dd).forEach(x=>h+=`<tr class="${+dd===d?"mine":""}"><td>${esc(x[0])}</td><td>${esc(x[2])}</td><td class="mono">${esc(x[3])}</td></tr>`)}
+  h+=`<tr class="grp"><td colspan="3">Senado, Circunscripción 7 (toda la RM)</td></tr>`;SENS.forEach(s=>h+=`<tr class="mine"><td>${esc(s[0])}</td><td>${esc(s[1])}</td><td class="mono">${esc(s[2])}</td></tr>`);
+  $("all").innerHTML=h;
+}
+let edited=false;
+function update(){
+  const d=C2D[sel.value];
+  $("reps").hidden=!d;$("send").hidden=!d;$("need-comuna").hidden=!!d;$("pick-hint").hidden=!!d;
+  if(!d){renderAll();return}
+  $("dist-tag").textContent=`Distrito ${d} · ${COMUNAS[d].join(", ")}`;
+  $("dips").innerHTML=DIPS.filter(x=>x[1]===d).map(x=>card(x[0],"Diputado/a · "+x[2],x[3])).join("");
+  $("sens").innerHTML=SENS.map(s=>card(s[0],"Senador/a · "+s[1],s[2])).join("");
+  $("emails").textContent=recipients().join(", ");
+  if(!edited)$("carta").value=letter();
+  const body=$("carta").value;
+  $("gmail").href="https://mail.google.com/mail/?view=cm&fs=1&to="+encodeURIComponent(recipients().join(","))+"&cc="+encodeURIComponent(CC)+"&su="+encodeURIComponent($("asunto").value)+"&body="+encodeURIComponent(body);
+  $("mailto").href="mailto:"+recipients().join(",")+"?cc="+encodeURIComponent(CC)+"&subject="+encodeURIComponent($("asunto").value)+"&body="+encodeURIComponent(body);
+  renderAll();
+}
+["comuna","nombre","correo","trato"].forEach(k=>$(k).addEventListener("input",update));
+$("comuna").addEventListener("change",update);
+$("carta").addEventListener("input",()=>{edited=true;update()});
+$("asunto").addEventListener("input",update);
+
+function copy(text,toastId,srcEl){
+  const t=$(toastId);
+  const done=()=>{t.textContent="Copiado";setTimeout(()=>t.textContent="",2200)};
+  const fallback=()=>{if(srcEl&&srcEl.select){srcEl.focus();srcEl.select()}else if(srcEl){const r=document.createRange();r.selectNodeContents(srcEl);const s=getSelection();s.removeAllRanges();s.addRange(r)}t.textContent="Seleccionado: usa Cmd/Ctrl + C"};
+  try{navigator.clipboard.writeText(text).then(done,fallback)}catch(e){fallback()}
+}
+$("copy-emails").addEventListener("click",()=>copy(recipients().join(", "),"toast-emails",$("emails")));
+$("copy-cc").addEventListener("click",()=>copy(CC,"toast-cc",$("ccbox")));
+$("copy-subject").addEventListener("click",()=>copy($("asunto").value,"toast-subject",$("asunto")));
+$("copy-letter").addEventListener("click",()=>copy($("carta").value,"toast-letter",$("carta")));
+const SHARE=`El Gobierno adhirió al «Escudo de las Américas» sin pasar por el Congreso y sin transparentar qué compromete a Chile, con posibles efectos en nuestro comercio exterior.
+
+El lunes 28 de septiembre se interpela al canciller. Antes de eso, escríbeles a tus diputados y senadores para pedirles que fiscalicen.
+
+En esta página eliges tu comuna y te aparecen tus parlamentarios con sus correos y una carta formal lista para enviar (toma 3 minutos):
+https://antoniapazsq.github.io/escudo-americas/`;
+$("share").value=SHARE;
+$("copy-share").addEventListener("click",()=>copy($("share").value,"toast-share",$("share")));
+update();
+</script>
+
+</body>
+</html>
