@@ -41,6 +41,7 @@ p{margin:0}
 .eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
 header{display:flex;flex-direction:column;gap:12px}
 header p{max-width:62ch;color:var(--muted);font-size:16px}
+header p.nonpartisan{font-size:14px;font-style:italic}
 .deadline{display:inline-flex;gap:8px;align-items:baseline;background:var(--warn-soft);color:var(--warn);padding:6px 12px;border-radius:6px;font-weight:600;font-size:14px;align-self:flex-start}
 section{display:flex;flex-direction:column;gap:16px}
 a{color:var(--accent)}
@@ -88,6 +89,7 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
     <span class="eyebrow">Región Metropolitana · Carta ciudadana</span>
     <h1>Escudo de las Américas: pide a tus parlamentarios que fiscalicen</h1>
     <p>El Gobierno adhirió al «Escudo de las Américas» sin pasar por el Congreso y sin publicar qué compromete. En 3 minutos, en esta misma página, puedes enviar una carta formal a tus diputados y senadores pidiéndoles que fiscalicen.</p>
+    <p class="nonpartisan">Una acción cívica ciudadana, sin color político: nos mueven los valores democráticos de la República y el bienestar de Chile.</p>
     <span class="deadline">Interpelación al canciller: lunes 28 de septiembre. Envía antes.</span>
   </header>
 
@@ -221,6 +223,10 @@ function letter(){
 
 Mi nombre es ${nombre}, ${trato} de la comuna de ${comuna}, Distrito N° ${d}, Circunscripción Senatorial 7, Región Metropolitana. Me dirijo a ustedes, en su calidad de representantes de la ciudadanía y titulares de la función fiscalizadora, para solicitarles que actúen frente a la adhesión de Chile al denominado «Escudo de las Américas», anunciada por el Presidente de la República en septiembre de 2026 sin haber sido sometida al Congreso Nacional y sin que se haya hecho público su contenido.
 
+Esta carta forma parte de una acción cívica ciudadana que vela por el bienestar y la soberanía de Chile. No responde a ningún color político en particular, sino a los valores democráticos a los que adhiere nuestra República y a la búsqueda del bienestar concreto de nuestro país. Les exigimos que, como representantes, cumplan su rol en favor de la ciudadanía y no de intereses particulares, pues su deber es, ante todo, con las ciudadanas y los ciudadanos de Chile. Estamos cada vez más atentos a su actuar y a fiscalizar su actividad y su trayectoria.
+
+Para que no haya confusión, detallamos a continuación, punto por punto, nuestras preocupaciones y los mecanismos que, de acuerdo con su función, les corresponde ejecutar.
+
 I. NORMAS QUE ESTA DECISIÓN PODRÍA VULNERAR
 
 1. Artículo 54 N° 1 de la Constitución Política. Corresponde al Congreso aprobar o desechar los tratados internacionales antes de su ratificación. Aunque el Gobierno califica la iniciativa como un «marco voluntario de coordinación», la naturaleza de un compromiso internacional depende de su contenido y no del nombre que se le dé. Si implica obligaciones de intercambio de información, cooperación policial o militar, o uso de recursos públicos, debió ser sometido a aprobación parlamentaria.
@@ -263,7 +269,7 @@ c) Requerir a la Subsecretaría de Relaciones Económicas Internacionales una ev
 
 d) Exigir que la adhesión sea sometida a la aprobación del Congreso Nacional conforme al artículo 54 N° 1 de la Constitución y, si ello no ocurre, ejercer las acciones constitucionales que correspondan, incluido el requerimiento ante el Tribunal Constitucional.
 
-Agradeceré acusar recibo de esta comunicación e informarme de las gestiones que realicen.
+Estamos atentos y esperamos su respuesta. Agradeceré acusar recibo de esta comunicación e informarme de las gestiones que realicen.
 
 Atentamente,
 
@@ -313,7 +319,7 @@ const SHARE=`El Gobierno adhirió al «Escudo de las Américas» sin pasar por e
 
 El lunes 28 de septiembre se interpela al canciller. Antes de eso, escríbeles a tus diputados y senadores para pedirles que fiscalicen.
 
-En esta página eliges tu comuna y te aparecen tus parlamentarios con sus correos y una carta formal lista para enviar (toma 3 minutos):
+Es una acción ciudadana, sin color político. En esta página eliges tu comuna y te aparecen tus parlamentarios con sus correos y una carta formal lista para enviar (toma 3 minutos):
 https://antoniapazsq.github.io/escudo-americas/`;
 $("share").value=SHARE;
 $("copy-share").addEventListener("click",()=>copy($("share").value,"toast-share",$("share")));
