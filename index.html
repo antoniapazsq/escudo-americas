@@ -132,11 +132,11 @@ footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);paddin
   <section id="paso3">
     <div class="stephead"><span class="num">3</span><h2>Copia y envía desde tu correo</h2></div>
     <div class="panel">
-      <p class="note"><b>Si usas Gmail:</b> aprieta «Abrir en Gmail». Se abre un correo ya listo con los destinatarios, el asunto y la carta. Revísalo y aprieta «Enviar».<br><b>Si usas otro correo</b> (Outlook, Hotmail, el del celular): abre un correo nuevo y aprieta «Abrir en mi app de correo». Si no funciona, abre un correo nuevo y pega lo que copias con cada botón: los destinatarios en «Para», el correo de copia en «CC», el asunto y la carta.</p>
+      <p class="note"><b>Si usas Gmail:</b> aprieta «Copiar carta y abrir Gmail». Se abre un correo con los destinatarios, la copia y el asunto ya puestos. Pega la carta en el mensaje y aprieta «Enviar».<br><b>Si usas otro correo</b> (Outlook, Hotmail, el del celular): abre un correo nuevo y aprieta «Copiar carta y abrir mi app de correo» y pega la carta en el mensaje. Si no se abre, abre un correo nuevo y pega lo que copias con cada botón: los destinatarios en «Para», el correo de copia en «CC», el asunto y la carta.</p>
       <div id="need-comuna" class="warnbox">Primero elige tu comuna en el paso 1.</div>
       <div id="send" hidden class="stack">
-        <div class="row"><a class="btn big" id="gmail" href="#" target="_blank" rel="noopener">Abrir en Gmail, ya listo</a><a class="btn big ghost" id="mailto" href="#">Abrir en mi app de correo</a></div>
-        <p class="note">Si la carta aparece cortada en tu app de correo, borra el texto y pega el que copias con el botón «Copiar carta».</p>
+        <div class="row"><a class="btn big" id="gmail" href="#" target="_blank" rel="noopener">Copiar carta y abrir Gmail</a><a class="btn big ghost" id="mailto" href="#">Copiar carta y abrir mi app de correo</a></div>
+        <div class="warnbox" id="paste-hint" hidden>La carta ya está copiada. En el correo que se abrió, toca el espacio del mensaje y pega: Cmd+V en Mac, Ctrl+V en Windows, o mantén presionado y elige «Pegar» en el celular. Los destinatarios, la copia y el asunto ya vienen puestos.</div>
         <div class="stack">
           <span class="lbl">Para (destinatarios)</span>
           <div class="emails-box" id="emails"></div>
@@ -296,8 +296,8 @@ function update(){
   $("emails").textContent=recipients().join(", ");
   if(!edited)$("carta").value=letter();
   const body=$("carta").value;
-  $("gmail").href="https://mail.google.com/mail/?view=cm&fs=1&to="+encodeURIComponent(recipients().join(","))+"&cc="+encodeURIComponent(CC)+"&su="+encodeURIComponent($("asunto").value)+"&body="+encodeURIComponent(body);
-  $("mailto").href="mailto:"+recipients().join(",")+"?cc="+encodeURIComponent(CC)+"&subject="+encodeURIComponent($("asunto").value)+"&body="+encodeURIComponent(body);
+  $("gmail").href="https://mail.google.com/mail/?view=cm&fs=1&to="+encodeURIComponent(recipients().join(","))+"&cc="+encodeURIComponent(CC)+"&su="+encodeURIComponent($("asunto").value);
+  $("mailto").href="mailto:"+recipients().join(",")+"?cc="+encodeURIComponent(CC)+"&subject="+encodeURIComponent($("asunto").value);
   renderAll();
 }
 ["comuna","nombre","correo","trato"].forEach(k=>$(k).addEventListener("input",update));
@@ -312,6 +312,11 @@ function copy(text,toastId,srcEl){
   try{navigator.clipboard.writeText(text).then(done,fallback)}catch(e){fallback()}
 }
 $("copy-emails").addEventListener("click",()=>copy(recipients().join(", "),"toast-emails",$("emails")));
+["gmail","mailto"].forEach(id=>$(id).addEventListener("click",()=>{
+  const t=$("carta").value;
+  try{navigator.clipboard.writeText(t).catch(()=>{})}catch(e){}
+  $("paste-hint").hidden=false;
+}));
 $("copy-cc").addEventListener("click",()=>copy(CC,"toast-cc",$("ccbox")));
 $("copy-subject").addEventListener("click",()=>copy($("asunto").value,"toast-subject",$("asunto")));
 $("copy-letter").addEventListener("click",()=>copy($("carta").value,"toast-letter",$("carta")));
